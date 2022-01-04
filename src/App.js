@@ -1,8 +1,10 @@
 import React from "react";
+import "./App.scss"
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore"
 import {collection, addDoc} from "firebase/firestore";
 import {firebaseConfig} from "./firebase/firebaseConfig";
+import ShowMessages from "./components/ShowMessages";
 
 // only in case of connection breakage
 const firebaseApp = initializeApp(firebaseConfig)
@@ -30,27 +32,25 @@ export default function App() {
     }
 
     return (
-        <div style={{
-            width: "100%",
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#508bb0"
-        }}>
-            <h1 style={title}>Using Google Firebase Firestore</h1>
-            <button
-                onClick={() => writeData("enzo", "Mehddeb", 2005)}
-                style={{
-                    width: "25%",
-                    backgroundColor: "blue",
-                    borderRadius: "15px",
-                    color: "white",
-                    fontSize: "1.2rem"
-                }}
-            >Send Firestore
-            </button>
+        <div className={"App-header"}>
+            <div className={"card"}>
+                <h1 style={title}>Google Firebase Firestore Chat</h1>
+                <button
+                    className={"App-logo"}
+                    onClick={() => writeData("enzo", "Mehddeb", 2005)}
+                    style={{
+                        width: "25%",
+                        backgroundColor: "blue",
+                        border: "gray groove 2.5px",
+                        borderRadius: "15px",
+                        color: "white",
+                        fontSize: "1.2rem",
+                        marginBottom: 30
+                    }}
+                >Send Firestore
+                </button>
+                <ShowMessages/>
+            </div>
         </div>
     )
 }
