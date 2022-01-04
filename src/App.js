@@ -25,10 +25,15 @@ function App() {
 
     useRef(()=>{
         writeUserData("Bruno", "meh.bruno@yahoo.com", "image/de/bruno.jpg")
-    }, [loading])
+    }, [])
 
     if (loading) {
-        return (<div className="App-header">Loading, please wait ...</div>)
+        return (
+            <>
+                <div className="App-header">⚠️ Loading, please wait ...</div>
+                <button onClick={writeUserData("Enzo", "enzo@enzo.com", "enzo/image.jpg")}>Sending</button>
+            </>
+        )
     } else if (!loading) {
         return (
             <div className="App">
