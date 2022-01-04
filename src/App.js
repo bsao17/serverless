@@ -23,7 +23,7 @@ function App() {
         setLoading(false);
     }
 
-    useRef(()=>{
+    useRef(() => {
         writeUserData("Bruno", "meh.bruno@yahoo.com", "image/de/bruno.jpg")
     }, [])
 
@@ -31,9 +31,10 @@ function App() {
         return (
             <div className="App-header">
                 <div>⚠️ Loading, please wait ...</div>
-                <button onClick={()=>{
+                <button onClick={() => {
                     writeUserData("Enzo", "enzo@enzo.com", "enzo/image.jpg")
-                }}>Sending</button>
+                }}>Sending
+                </button>
             </div>
         )
     } else if (!loading) {
