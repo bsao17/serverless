@@ -29,10 +29,12 @@ function App() {
 
     if (loading) {
         return (
-            <>
-                <div className="App-header">⚠️ Loading, please wait ...</div>
-                <button onClick={writeUserData("Enzo", "enzo@enzo.com", "enzo/image.jpg")}>Sending</button>
-            </>
+            <div className="App-header">
+                <div>⚠️ Loading, please wait ...</div>
+                <button onClick={()=>{
+                    writeUserData("Enzo", "enzo@enzo.com", "enzo/image.jpg")
+                }}>Sending</button>
+            </div>
         )
     } else if (!loading) {
         return (
