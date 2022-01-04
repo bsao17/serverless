@@ -7,10 +7,10 @@ const firebaseApp = initializeApp(firebaseConfig)
 
 const db = getFirestore();
 
-export default function App() {
-    async function writeData() {
+export default function FirestoreData() {
+    async function writeData(coll) {
         try {
-            const docRef = await addDoc(collection(db, "users"), {
+            const docRef = await addDoc(collection(db, coll), {
                 first: "Ada",
                 last: "Lovelace",
                 born: 1815
@@ -22,7 +22,7 @@ export default function App() {
     }
     return (
         <div>
-            <button onClick={ ()=> writeData()}>Send Firestore</button>
+            <button onClick={ writeData("users")}>Send Firestore</button>
         </div>
     )
 }

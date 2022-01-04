@@ -24,7 +24,7 @@ yarn-error.log*
 
 # firebase
 firebaseApp.js
-firebaseConfig.js
+src/firebase/firebaseConfig.js
 .firebaserc
 firebase.json
 database.rules.json
