@@ -12,6 +12,6 @@ and to late, use firebase database for store their data like images, files ...
 <h2>S.O.S. 🥵🥴😵</h2>
 ...
 
-# <code style="color: red">Warning⚠️</code>
+# <h1 style="color: red">Warning⚠️</h1>
 
 ## finally you do what google says and prefer to use firestore because it is more practical and simpler !
