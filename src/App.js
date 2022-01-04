@@ -11,28 +11,25 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [dataDb, setDataDb] = useState([]);
 
-    function writeUserData(name, email, imageUrl) {
+    function writeUserData(data) {
         // database state
-        setDataDb({name, email, imageUrl});
+        setDataDb(data);
+        console.log(dataDb)
         // database write
-        set(databseRef, {
-            username: name,
-            email: email,
-            profile_picture: imageUrl,
-        });
+        set(databseRef, dataDb);
         setLoading(false);
     }
 
     useRef(() => {
         writeUserData("Bruno", "meh.bruno@yahoo.com", "image/de/bruno.jpg")
-    }, [])
+    }, [loading])
 
     if (loading) {
         return (
             <div className="App-header">
                 <div>⚠️ Loading, please wait ...</div>
                 <button onClick={() => {
-                    writeUserData("Enzo", "enzo@enzo.com", "enzo/image.jpg")
+                    writeUserData(["Enzo", "enzo@enzo.com", "enzo/image.jpg"])
                 }}>Sending
                 </button>
             </div>
@@ -47,7 +44,7 @@ function App() {
                     </p>
                     <button
                         onClick={() => {
-                            writeUserData("Simba", "declic62@gmail.com", "image/de/bruno.jpg");
+                            writeUserData([{name:"Simba", email:"declic62@gmail.com", picture: "image/de/bruno.jpg"}]);
                             console.log(database);
                         }}
                     >
