@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import "../../App.scss"
 import styleShow from "./showMessages.module.scss"
 import {initializeApp} from "firebase/app";
-import {getFirestore} from "firebase/firestore"
 import {collection, addDoc} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "firebase/auth";
