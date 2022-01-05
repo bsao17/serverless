@@ -5,7 +5,7 @@ import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore"
 import {collection, addDoc} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "firebase/auth";
 
 const db = initializeApp(firebaseConfig)
 
@@ -70,9 +70,7 @@ export default function ShowMessages() {
                 </button>
 
                 <button
-                    onClick={()=>{
-                        signout()
-                    }}
+                    onClick={signout}
                 className={styleShow.signout}
                 >Signout
                 </button>

@@ -16,11 +16,15 @@ const link = {
 }
 export default function Navigation() {
     const[photo, setPhoto] = useState("")
-    let auth = getAuth();
-    let user = auth.currentUser;
+    const auth = getAuth();
+    const user = auth.currentUser;
     onAuthStateChanged(auth, (user) => {
-        if (user) {
+        if (user !== null) {
             setPhoto(user.photoURL)
+            const displayName = user.displayName;
+            const email = user.email;
+            const photoURL = user.photoURL;
+            const emailVerified = user.emailVerified;
             const uid = user.uid;
         }
     });
