@@ -1,27 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import "../../App.scss"
 import styleShow from "./showMessages.module.scss"
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore"
 import {collection, addDoc} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect, signOut} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut} from "firebase/auth";
 
-import signInWithGoogleAuthentication from "../toggleSignin";
-import toggleSignin from "../toggleSignin";
-
-// only in case of connection breakage
-const firebaseApp = initializeApp(firebaseConfig)
-const db = getFirestore();
-
-// Style title
-const title = {
-    color: "white",
-    fontWeight: "900"
-}
+const db = initializeApp(firebaseConfig)
 
 export default function ShowMessages() {
-
+    const[userLogin, setUserLogin] =useState()
     function signin(){
         const provider = new GoogleAuthProvider();
         const auth = getAuth();
@@ -32,6 +21,7 @@ export default function ShowMessages() {
                 const token = credential.accessToken;
                 // The signed-in user info.
                 const user = result.user;
+                setUserLogin(user)
                 // ...
             }).catch((error) => {
             // Handle Errors here.
@@ -45,14 +35,16 @@ export default function ShowMessages() {
         });
     }
 
+    console.log(userLogin)
     function signout(){
         const auth = getAuth();
         signOut(auth).then(() => {
-            // Sign-out successful.
+            alert(userLogin)
         }).catch((error) => {
             // An error happened.
         });
     }
+
     // database Storage
     async function writeData(first, last, born) {
         try {
@@ -70,11 +62,9 @@ export default function ShowMessages() {
     return (
         <div className={"App-header"}>
             <div className={"card"}>
-                <h1 style={title}>Google Firestore Chat</h1>
+                <h1 >Google Firestore Chat</h1>
                 <button
-                    onClick={()=>{
-                        signin()
-                    }}
+                    onClick={signin}
                     className={styleShow.signin}
                 >Signin
                 </button>

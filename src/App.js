@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import ShowMessages from "./components/showMessages/ShowMessages";
 import StoreData from "./components/StoreData";
