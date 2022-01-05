@@ -39,7 +39,7 @@ export default function ShowMessages() {
     function signout(){
         const auth = getAuth();
         signOut(auth).then(() => {
-            alert(userLogin)
+
         }).catch((error) => {
             // An error happened.
         });
