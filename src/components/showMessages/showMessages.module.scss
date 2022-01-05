@@ -1,0 +1,24 @@
+.signin{
+  width: 50%;
+  background-color: blue;
+  border: gray groove 2.5px;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 30px;
+  overflow: hidden
+}
+.signin:active{
+  transform: scaleX(0.8);
+}
+.signout{
+  width: 50%;
+  background-color: red;
+  border: gray groove 2.5px;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 30px;
+  overflow: hidden
+}
+.signout:active{
+  transform: scaleX(0.8);
+}

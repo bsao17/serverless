@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import ShowMessages from "./components/ShowMessages";
+import ShowMessages from "./components/showMessages/ShowMessages";
 import StoreData from "./components/StoreData";
 
 export default function App(){
