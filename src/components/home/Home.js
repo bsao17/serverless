@@ -4,40 +4,34 @@ import styleShow from "./showMessages.module.scss"
 import {initializeApp} from "firebase/app";
 import {collection, addDoc} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "firebase/auth";
+import {getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "firebase/auth";
 
 const db = initializeApp(firebaseConfig)
 
 export default function Home() {
-    const[userLogin, setUserLogin] =useState()
-    function signin(){
-        const provider = new GoogleAuthProvider();
+    const [userLogin, setUserLogin] = useState()
+
+// Signin function
+    function signin() {
+        const GoogleProvider = new GoogleAuthProvider();
         const auth = getAuth();
-        signInWithPopup(auth, provider)
+        signInWithPopup(auth, GoogleProvider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
                 const user = result.user;
                 setUserLogin(user)
-                // ...
             }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
+            console.log({
+                errorCode: error.code,
+                errorMessage: error.message
+            })
         });
     }
 
-    console.log(userLogin)
-    function signout(){
+    // signout function
+    function signout() {
         const auth = getAuth();
         signOut(auth).then(() => {
+
 
         }).catch((error) => {
             // An error happened.
@@ -45,12 +39,12 @@ export default function Home() {
     }
 
     // database Storage
-    async function writeData(first, last, born) {
+    async function postMessage(postAt, postBy, message) {
         try {
             const docRef = await addDoc(collection(db, "users"), {
-                first: first,
-                last: last,
-                born: born
+                postAt: postAt,
+                postBy: postBy,
+                message: message
             });
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {
@@ -61,7 +55,7 @@ export default function Home() {
     return (
         <div className={"App-header"}>
             <div className={"card"}>
-                <h1 >Google Firestore Chat</h1>
+                <h1>Google Firestore Chat</h1>
                 <button
                     onClick={signin}
                     className={styleShow.signin}
@@ -70,7 +64,7 @@ export default function Home() {
 
                 <button
                     onClick={signout}
-                className={styleShow.signout}
+                    className={styleShow.signout}
                 >Signout
                 </button>
             </div>
