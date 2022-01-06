@@ -1,5 +1,5 @@
 import {createStore} from "redux";
-import {writingMessageReducer} from "./reducer/writingMessageReducer";
+import {chatReducer} from "./reducer/chatReducer";
 
 
-export const store = createStore(writingMessageReducer)
+export const store = createStore(chatReducer)
