@@ -1,10 +1,10 @@
 export const ADD_MESSAGE = "ADD_MESSAGE"
 export const ADD_USER = "ADD_USER"
 
-export const writingMessageAction = (message) => {
+export const writingMessageAction = (post) => {
     return {
         type: ADD_MESSAGE,
-        message
+        payload: post
     }
 }
 

@@ -1,15 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import "../../App.scss"
 import styleShow from "./showMessages.module.scss"
 import {initializeApp} from "firebase/app";
-import {collection, addDoc} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
 import {getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "firebase/auth";
 
 const db = initializeApp(firebaseConfig)
 
 export default function Home() {
-    const [userLogin, setUserLogin] = useState()
 
 // Signin function
     function signin() {
@@ -18,7 +16,7 @@ export default function Home() {
         signInWithPopup(auth, GoogleProvider)
             .then((result) => {
                 const user = result.user;
-                setUserLogin(user)
+                console.log(user)
             }).catch((error) => {
             console.log({
                 errorCode: error.code,
@@ -31,26 +29,12 @@ export default function Home() {
     function signout() {
         const auth = getAuth();
         signOut(auth).then(() => {
-
-
+            alert("vous êtes déconnecté !")
         }).catch((error) => {
-            // An error happened.
+            console.log({error: error})
         });
     }
 
-    // database Storage
-    async function postMessage(postAt, postBy, message) {
-        try {
-            const docRef = await addDoc(collection(db, "users"), {
-                postAt: postAt,
-                postBy: postBy,
-                message: message
-            });
-            console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
-    }
 
     return (
         <div className={"App-header"}>

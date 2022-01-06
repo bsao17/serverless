@@ -1,19 +1,17 @@
 import {ADD_MESSAGE} from "../action/writingMessageAction";
 import { ADD_USER} from "../action/writingMessageAction";
 
-const initialState = []
+let id = 1
+
+const initialState = {message: []}
+
 
 export const chatReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE:
             return {
                 ...state,
-                message: [...state, action.message]
-            }
-        case ADD_USER:
-            return {
-                ...state,
-                user: [...state, action.user]
+                post: [...state.message, action.payload]
             }
         default:
             return state
