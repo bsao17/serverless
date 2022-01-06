@@ -33,7 +33,7 @@ export default function Navigation() {
 
         <div style={navigationBar}>
             <Link style={link} to={"/"}>Home</Link>
-            <Link style={link} to={"/store"}>Store Data</Link>
+            <Link style={link} to={"/store"}>Chat</Link>
             {user ? (
                     <div style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
                         <h1 style={{color: "green", marginRight: 20}}>

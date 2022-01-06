@@ -8,7 +8,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "firebase/a
 
 const db = initializeApp(firebaseConfig)
 
-export default function ShowMessages() {
+export default function Home() {
     const[userLogin, setUserLogin] =useState()
     function signin(){
         const provider = new GoogleAuthProvider();
