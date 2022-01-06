@@ -1,4 +1,5 @@
 import {createStore} from "redux";
+import {writingMessageReducer} from "./reducer/writingMessageReducer";
 
 
-export const store = createStore(writingMessage)
+export const store = createStore(writingMessageReducer)

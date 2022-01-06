@@ -1,6 +1,8 @@
-import {ADD_MESSAGE} from "../action/writingMessage.action";
+import {ADD_MESSAGE} from "../action/writingMessageAction";
 
-export const WritingMessageReducer = (state, action) => {
+const initialState = []
+
+export const writingMessageReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE:
             return {
