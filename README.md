@@ -1,6 +1,7 @@
 # A test project for an API that will be useful in a future mobile application
 
 ![chat UI](./public/images/captureUI.jpg)
+![chat UI](./public/images/captureUIChat.jpg)
 
 I'm working right now on this project for
 testing use firebase serverless in a futur mobile app,
