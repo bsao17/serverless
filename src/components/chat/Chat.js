@@ -1,25 +1,28 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styleChat from "./chat.module.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {writingMessageAction} from "../../store/action/writingMessageAction";
 import {initializeApp} from "firebase/app";
-import {getAuth} from "firebase/auth";
-import {collection, addDoc} from "firebase/firestore";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {collection, addDoc, getDocs} from "firebase/firestore";
 import {getFirestore} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
 
 const firebaseApp = initializeApp(firebaseConfig)
 const db = getFirestore()
-const user = getAuth().currentUser
-console.log(user)
+const auth = getAuth()
+
 
 export default function Chat() {
-    const dispatch = useDispatch(null)
+    const dispatch = useDispatch()
     const messageSelector = useSelector(state => state.post)
     const ref = useRef("")
+    const [userName, setUserName] = useState("")
+    const [userPhoto, setUserPhoto] = useState("")
+    const [userConnected, setUserConnected] = useState()
 
     // database Storage
-    async function postMessage(message) {
+    async function addPost(message) {
         try {
             const docRef = await addDoc(collection(db, "messages"), {
                 messages: message
@@ -30,29 +33,61 @@ export default function Chat() {
         }
     }
 
-    return (
-        <div className={styleChat.chatHeader}>
-            <div className="card  rounded-3 w-100 d-flex flex-column align-items-center justify-content-end">
-                <div className={"w-100 d-flex"} style={{height: "70vh"}}>
-                    <div className={"card card-body me-2 mb-2 w-25 rounded-3 d-flex flex-column justify-content-evenly"}>Users: <span className={"bg-light text-primary p-2 rounded-2"}>{user.displayName}</span></div>
-                    <div className={"card card-body ms-2 mb-2 w-100 overflow-scroll rounded-3"}><img
-                        className={"rounded-circle"} src={user.photoURL} alt="avatar"/> {messageSelector}</div>
+    async function getPost() {
+        const queryPosts = await getDocs(collection(db, "messages"));
+        queryPosts.then(data => console.log(data))
+    }
+
+    onAuthStateChanged(auth, (user) => {
+        if (user !== null) {
+            const displayName = user.displayName;
+            const email = user.email;
+            const photoURL = user.photoURL;
+            const emailVerified = user.emailVerified;
+            const uid = user.uid;
+            setUserName(displayName)
+            setUserPhoto(photoURL)
+            setUserConnected(emailVerified)
+
+        }
+    });
+
+    console.log(userConnected)
+    useEffect(() => {
+        return () => {
+            // getPost()
+        };
+    }, []);
+
+    return <div className={styleChat.chatHeader}>
+        <div className="card  rounded-3 w-100 d-flex flex-column align-items-center justify-content-end">
+            <div className={"w-100 d-flex"} style={{height: "70vh"}}>
+                <div
+                    className={"card card-body me-2 mb-2 w-25 rounded-3 d-flex flex-column justify-content-evenly"}>Users:
+                    {userConnected ? (
+                        <section className={"d-flex flex-column align-items-center"}>
+                            <img className={styleChat.userphoto} src={userPhoto} alt="Avatar"/>
+                            <span className={styleChat.username}>{userName}</span>
+                        </section>
+                    ) : ""}
                 </div>
-                <div className={"w-100"} style={styleChat.form}>
-                    <form className={"form-group d-flex"}>
-                        <input ref={ref} className={"form-control"} type="text" placeholder={"Votre message ici ..."}/>
-                        <button
-                            className={"btn btn-success"}
-                            onClick={(event) => {
-                                event.preventDefault()
-                                dispatch(writingMessageAction(ref.current.value))
-                                postMessage(ref.current.value)
-                                ref.current.value = ""
-                            }}
-                        ><i className="fas fa-caret-square-right"/></button>
-                    </form>
-                </div>
+                <div className={"card card-body ms-2 mb-2 w-100 overflow-scroll rounded-3"}>{messageSelector}</div>
+            </div>
+            <div className={"w-100"}>
+                <form className={"form-group d-flex"}>
+                    <input ref={ref} className={"form-control"} type="text" placeholder={"Votre message ici ..."}
+                           disabled={!userConnected}/>
+                    <button
+                        className={"btn btn-success"}
+                        onClick={(event) => {
+                            event.preventDefault()
+                            dispatch(writingMessageAction(ref.current.value))
+                            addPost(ref.current.value)
+                            ref.current.value = ""
+                        }}
+                    ><i className="fas fa-caret-square-right"/></button>
+                </form>
             </div>
         </div>
-    )
+    </div>
 }

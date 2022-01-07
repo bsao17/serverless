@@ -10,8 +10,20 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-.form{
 
+#displayname{
+
+}
+
+//.form{
+//
+//}
+.username{
+  font-size: 1rem;
+}
+.userphoto{
+  width: 40%;
+  border-radius: 50%;
 }
 
 @keyframes App-logo-spin {

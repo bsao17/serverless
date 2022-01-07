@@ -28,7 +28,6 @@ export default function Navigation() {
             const uid = user.uid;
         }
     });
-    console.log(user)
     return (
 
         <div style={navigationBar}>
