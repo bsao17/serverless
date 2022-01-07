@@ -4,13 +4,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {writingMessageAction} from "../../store/action/writingMessageAction";
 import {initializeApp} from "firebase/app";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
-import {collection, addDoc, getDocs} from "firebase/firestore";
-import {getFirestore} from "firebase/firestore";
+import {getFirestore, collection, addDoc, getDoc, setDoc, doc, onSnapshot} from "firebase/firestore";
+// import {getFirestore} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
 
 const firebaseApp = initializeApp(firebaseConfig)
 const db = getFirestore()
 const auth = getAuth()
+const messageReads = collection(db, "messages")
+console.log(getDoc(doc(messageReads, "messages")))
 
 
 export default function Chat() {
@@ -20,11 +22,14 @@ export default function Chat() {
     const [userName, setUserName] = useState("")
     const [userPhoto, setUserPhoto] = useState("")
     const [userConnected, setUserConnected] = useState()
+    const [messages, setMessages] = useState()
 
     // database Storage
     async function addPost(message) {
         try {
             const docRef = await addDoc(collection(db, "messages"), {
+                postAt: new Date().toLocaleDateString(),
+                postBy: userName,
                 messages: message
             });
             console.log("Document written with ID: ", docRef.id);
@@ -33,10 +38,6 @@ export default function Chat() {
         }
     }
 
-    async function getPost() {
-        const queryPosts = await getDocs(collection(db, "messages"));
-        queryPosts.then(data => console.log(data))
-    }
 
     onAuthStateChanged(auth, (user) => {
         if (user !== null) {
@@ -52,12 +53,6 @@ export default function Chat() {
         }
     });
 
-    console.log(userConnected)
-    useEffect(() => {
-        return () => {
-            // getPost()
-        };
-    }, []);
 
     return <div className={styleChat.chatHeader}>
         <div className="card  rounded-3 w-100 d-flex flex-column align-items-center justify-content-end">
@@ -71,7 +66,8 @@ export default function Chat() {
                         </section>
                     ) : ""}
                 </div>
-                <div className={"card card-body ms-2 mb-2 w-100 overflow-scroll rounded-3"}>{messageSelector}</div>
+                <div
+                    className={"card card-body ms-2 mb-2 w-100 overflow-scroll rounded-3"}>{/*messageSelector*/ messages}</div>
             </div>
             <div className={"w-100"}>
                 <form className={"form-group d-flex"}>
