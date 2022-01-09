@@ -31,9 +31,10 @@ export default function Chat(props) {
             setMessageDb(JSON.stringify(snap.data().messages))
         })
     }
-
-
-    // database Storage
+    /*
+    TODO implement request all message with real time method
+     database Storage
+    */
     async function addPost(newMessage) {
         try {
             const docRef = await addDoc(collection(firestore, "messages"), {
