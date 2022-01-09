@@ -1,42 +1,45 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styleChat from "./chat.module.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {writingMessageAction} from "../../store/action/writingMessageAction";
-import { initializeApp } from 'firebase/app';
+import {initializeApp} from 'firebase/app';
 import {getAuth, onAuthStateChanged} from "firebase/auth";
-import {getFirestore, collection, addDoc, getDoc, getDocs, setDoc, doc, onSnapshot} from "firebase/firestore";
+import {addDoc, collection, getDocs, getFirestore} from "firebase/firestore";
 import {firebaseConfig} from "../../firebase/firebaseConfig";
 
 
 const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
-console.log(db)
+const firestore = getFirestore()
+console.log(firestore)
 const auth = getAuth()
 
 
-// Component
+// Chat Component
 export default function Chat(props) {
     const dispatch = useDispatch()
-    const messageSelector = useSelector(state => state.post)
+    // const messageSelector = useSelector(state => state.post)
     const ref = useRef("")
     const [userName, setUserName] = useState("")
     const [userPhoto, setUserPhoto] = useState("")
     const [userConnected, setUserConnected] = useState()
+    const [messageDb, setMessageDb] = useState("")
 
-    async function getMessages(){
-        const messages = collection(db, "messages")
-        const messagesSnapshot = await getDocs(messages)
-        const messagesList = messagesSnapshot.docs.map((doc)=>{doc.data()})
-        return messagesList
+    const messageStore = collection(firestore, "messages")
+    async function getPost(){
+        const querySnapshot = await getDocs(messageStore)
+        return querySnapshot.forEach((snap) => {
+            setMessageDb(JSON.stringify(snap.data().messages))
+        })
     }
 
+
     // database Storage
-    async function addPost(message) {
+    async function addPost(newMessage) {
         try {
-            const docRef = await addDoc(collection(db, "messages"), {
+            const docRef = await addDoc(collection(firestore, "messages"), {
                 postAt: new Date().toLocaleDateString(),
                 postBy: userName,
-                messages: message
+                messages: newMessage
             });
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {
@@ -44,7 +47,19 @@ export default function Chat(props) {
         }
     }
 
+    onAuthStateChanged(auth, (user) => {
+        if (user !== null) {
+            const displayName = user.displayName;
+            const email = user.email;
+            const photoURL = user.photoURL;
+            const emailVerified = user.emailVerified;
+            setUserConnected(emailVerified)
+            setUserName(displayName)
+            setUserPhoto(photoURL)
+        }
+    });
 
+    useEffect(getPost, [])
 
 
     return <div className={styleChat.chatHeader}>
@@ -58,7 +73,7 @@ export default function Chat(props) {
                         </section> : ""}
                 </div>
                 <div id={styleChat.screenMessages} className={"card border ms-1 mb-2 w-100 text-dark overflow-scroll rounded-0"}>
-                    <span className={styleChat.post}>{/* liste des messages ici */}</span>
+                    <span className={styleChat.post}>{/* liste des messageStore ici */ messageDb}</span>
                 </div>
             </div>
             <div className={"w-100"}>
