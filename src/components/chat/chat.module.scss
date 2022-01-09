@@ -6,24 +6,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-#displayname{
-
+#screenMessages{
+  background: #b6b6b6;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
-//.form{
-//
-//}
 .username{
   font-size: 1rem;
 }
 .userphoto{
   width: 40%;
   border-radius: 50%;
+}
+.post{
+  background: #fff;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 @keyframes App-logo-spin {
