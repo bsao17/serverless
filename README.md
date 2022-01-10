@@ -4,8 +4,9 @@
 ![chat UI](./public/images/captureUIChat.jpg)
 ![chat UI](./public/images/captureUIChat4.jpg)
 
-I'm working right now on this project for
-testing serverless backend firebase and using it, in my next mobile app,
+I work on this project continuously for
+test and learn the basics of serverless firebase backend and use them in my next mobile app,
+and my main site and like that I will always work better and I will always go further !
 
 I'ld like add firestore instead of websockets for log the user messages
 and to late, use firebase database for store their data like images, files ...
