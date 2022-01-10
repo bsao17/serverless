@@ -1,5 +1,4 @@
-# serverless backend project testing for other web and mobile projects
-
+# Serverless backend chat project created for using on other web and mobile projects
 ![chat UI](./public/images/captureUI.jpg)
 ![chat UI](./public/images/captureUIChat.jpg)
 ![chat UI](./public/images/captureUIChat4.jpg)
