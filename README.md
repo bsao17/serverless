@@ -1,4 +1,4 @@
-# A test project for an API that will be useful in a future mobile application
+# serverless backend project testing for other web and mobile projects
 
 ![chat UI](./public/images/captureUI.jpg)
 ![chat UI](./public/images/captureUIChat.jpg)
