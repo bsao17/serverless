@@ -5,7 +5,7 @@
 ![chat UI](./public/images/captureUIChat4.jpg)
 
 I'm working right now on this project for
-testing use firebase serverless in a futur mobile app,
+testing serverless backend firebase and using it, in my next mobile app,
 
 I'ld like add firestore instead of websockets for log the user messages
 and to late, use firebase database for store their data like images, files ...
