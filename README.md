@@ -9,12 +9,10 @@ testing use firebase serverless in a futur mobile app,
 
 I'ld like add firestore instead of websockets for log the user messages
 and to late, use firebase database for store their data like images, files ...
+## and so on ...
+<hr/>
 
-### and so on ...
-
-<code><h1>⚠️</h1>"my life is a giant test" 😶</code>
-<h2>S.O.S. 🥵🥴😵</h2>
-...
+### <code>" my life is a giant test 😶 " ...</code>
 
 # <h1 style="color: red">Warning⚠️</h1>
 
