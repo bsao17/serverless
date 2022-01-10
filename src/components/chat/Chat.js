@@ -9,7 +9,7 @@ import {firebaseConfig} from "../../firebase/firebaseConfig";
 
 
 const app = initializeApp(firebaseConfig)
-const firestore = getFirestore()
+const firestore = getFirestore(app)
 console.log(firestore)
 const auth = getAuth()
 
@@ -21,14 +21,16 @@ export default function Chat(props) {
     const ref = useRef("")
     const [userName, setUserName] = useState("")
     const [userPhoto, setUserPhoto] = useState("")
+    const [userMail, setUserMail] = useState("")
     const [userConnected, setUserConnected] = useState()
-    const [messageDb, setMessageDb] = useState("")
+    const [messageDb, setMessageDb] = useState([])
 
     const messageStore = collection(firestore, "messages")
     async function getPost(){
         const querySnapshot = await getDocs(messageStore)
         return querySnapshot.forEach((snap) => {
-            setMessageDb(JSON.stringify(snap.data().messages))
+            setMessageDb([snap.data().messages])
+            console.log(snap.data().messages)
         })
     }
     /*
@@ -57,6 +59,7 @@ export default function Chat(props) {
             setUserConnected(emailVerified)
             setUserName(displayName)
             setUserPhoto(photoURL)
+            setUserMail(email)
         }
     });
 
@@ -71,10 +74,11 @@ export default function Chat(props) {
                     {userConnected ? <section className={"d-flex flex-column align-items-center"}>
                             <img className={styleChat.userphoto} src={userPhoto} alt="Avatar"/>
                             <span className={styleChat.username}>{userName}</span>
+                            <span className={styleChat.username}>{userMail}</span>
                         </section> : ""}
                 </div>
-                <div id={styleChat.screenMessages} className={"card border ms-1 mb-2 w-100 text-dark overflow-scroll rounded-0"}>
-                    <span className={styleChat.post}>{/* liste des messageStore ici */ messageDb}</span>
+                <div id={styleChat.screenMessages} className={"card border mb-2 w-100 text-dark overflow-scroll rounded-0"}>
+                    <span className={styleChat.post}><img src={userPhoto} alt=""/> {messageDb.map((m)=>{return m})}</span>
                 </div>
             </div>
             <div className={"w-100"}>
