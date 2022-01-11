@@ -25,16 +25,23 @@ export default function Chat(props) {
     const messageStore = collection(firestore, "messages")
 
     //Read database messages
-    async function getPost() {
-        try {
-            const querySnapshot = await getDocs(messageStore)
-            return querySnapshot.forEach((snap) => {
-                setMessageDb([snap.data().messages])
-                console.log(snap.data().messages)
-            })
-        } catch (error) {
-            console.log(`Erreur Bruno tu t'est planté : ${error}`)
-        }
+    // async function getPost() {
+    //     try {
+    //         const querySnapshot = await getDocs(messageStore)
+    //         return querySnapshot.forEach((snap) => {
+    //             setMessageDb([snap.data().messages])
+    //             console.log(snap.data().messages)
+    //         })
+    //     } catch (error) {
+    //         console.log(`Erreur Bruno tu t'est planté : ${error}`)
+    //     }
+    // }
+
+    async function getPost(){
+        const messageSnapshot = await getDocs(messageStore)
+        const messageList = messageSnapshot.docs.map((snap)=>{
+            setMessageDb(snap.data().messages)
+        })
     }
 
     /*
@@ -42,7 +49,7 @@ export default function Chat(props) {
      database Storage
     */
 
-    // Write new data in Firestore database (postAt, postBy, messages)
+    //Write new data in Firestore database (postAt, postBy, messages)
     async function addPost(newMessage) {
         try {
             const docRef = await addDoc(collection(firestore, "messages"), {
@@ -72,8 +79,6 @@ export default function Chat(props) {
 
     // request all messages on load component
     useEffect(getPost, [])
-
-
     return (
         <div className={styleChat.chatHeader}>
             <div className=" w-100 d-flex flex-column align-items-center justify-content-end">
