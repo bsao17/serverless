@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "../../App.scss"
 import styleShow from "./showMessages.module.scss"
 import {initializeApp} from "firebase/app";
@@ -8,7 +8,6 @@ import {getAuth, signInWithPopup, GoogleAuthProvider, signOut} from "firebase/au
 const db = initializeApp(firebaseConfig)
 
 export default function Home() {
-
 // Signin function
     function signin() {
         const GoogleProvider = new GoogleAuthProvider();
@@ -16,7 +15,6 @@ export default function Home() {
         signInWithPopup(auth, GoogleProvider)
             .then((result) => {
                 const user = result.user;
-                console.log(user)
             }).catch((error) => {
             console.log({
                 errorCode: error.code,
