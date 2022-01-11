@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
+import firebaseui from "firebaseui";
 
 // CSS in JS
 const navigationBar = {
@@ -34,16 +35,18 @@ export default function Navigation() {
         }
     });
 
+
+
     return (
         <div style={navigationBar}>
             <Link style={link} to={"/"}>Home</Link>
-            {/*<Link style={link} to={"/store"}>Chat</Link>*/}
             {userConnected ? (
                     <div style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
                         <h1 style={{color: "green", marginRight: 20}}>
                             <i className="fas fa-user"/>
                         </h1>
                         <img style={{borderRadius: "50%", width: "30%", height: "30%"}} src={`${photo}`} alt=""/>
+                        <Link to={"/"}>Disconnect</Link>
                     </div>) :
                 <h1 style={{color: "red"}}><i className="fas fa-user-slash"/></h1>}
         </div>

@@ -17,6 +17,7 @@ export default function Home() {
 
 // Signin function
     const uiConfig = {
+        signInFlow: 'popup',
         // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
         signInSuccessUrl: '/store',
         // We will display Google and Facebook as auth providers.
@@ -25,12 +26,6 @@ export default function Home() {
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         ],
     };
-
-    // signout function
-    function signout() {
-
-    }
-
 
     return (
         <div className={"App-header"}>
