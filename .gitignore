@@ -28,3 +28,6 @@ src/firebase/firebaseConfig.js
 .firebaserc
 firebase.json
 database.rules.json
+firestore.rules
+firestore.indexes.json
+storage.rules
